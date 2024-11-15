@@ -45,6 +45,61 @@ def MoverHaciaIzquierda(i, j, Tablero):
 
         j -= 1
 
+def RotarTableroHorizontalmenteNoventaGrados(Tablero):
+    TableroNuevo = np.zeros((4,4), int)
+    for i in range(4):
+        for j in range(4):
+            if i == 0:
+                TableroNuevo[(j,3)] = Tablero[(i, j)]
+
+            elif i == 1:
+                TableroNuevo[(j, 2)] = Tablero[(i, j)]
+                
+            elif i == 2:
+                TableroNuevo[(j, 1)] = Tablero[(i, j)]
+
+            elif i == 3:
+                TableroNuevo[(j, 0)] = Tablero[(i,j)]
+    return TableroNuevo
+
+def RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, Rotaciones):
+    TableroNuevo = np.zeros((4,4), int)
+    
+    
 
 
+
+def EfectuarMovimiento(Tablero, Movimiento):
+    if Movimiento == "Izquierda":
+        MoverHaciaIzquierdaTodo(Tablero)
+    
+    elif Movimiento == "Derecha":
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 2)
+        MoverHaciaIzquierdaTodo(Tablero)
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 2)
+    
+    elif Movimiento == "Arriba":
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 3)
+        MoverHaciaIzquierdaTodo(Tablero)
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 1)
+    
+    elif Movimiento == "Abajo":
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 1)
+        MoverHaciaIzquierdaTodo(Tablero)
+        RotarTableroHorizontalmenteNoventaGrados(Tablero, 3)
+
+    LlenarCasilleroVacio(Tablero)
+
+
+
+Tablero = CrearTablero()
+print(Tablero, '\n')
+Tablero = np.flip(Tablero)
+print(Tablero, '\n')
+Tablero = np.flipud(Tablero)
+print(Tablero, '\n')
+
+
+
+#EfectuarMovimiento(Tablero, "Derecha")
 
