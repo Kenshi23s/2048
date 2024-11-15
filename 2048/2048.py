@@ -64,6 +64,11 @@ def RotarTableroHorizontalmenteNoventaGrados(Tablero):
 
 def RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, Rotaciones):
     TableroNuevo = np.zeros((4,4), int)
+
+    for _ in range(Rotaciones):
+        TableroNuevo = RotarTableroHorizontalmenteNoventaGrados(TableroNuevo)
+
+    return TableroNuevo
     
     
 
