@@ -75,11 +75,11 @@ def main(n):
     # Set up display
     screen = pygame.display.set_mode((SCREENSIZE, SCREENSIZE))
 
-    tablero = resolucion.crear_tablero(n)
-    tablero = resolucion.llenar_pos_vacias(tablero, 2)
+    tablero = resolucion.crear_tablero(3)
+    tablero = resolucion.llenar_pos_vacias(tablero, 10)
     tile_width = (SCREENSIZE - (n+1)*GAP)/n
     tile_size = (tile_width, tile_width)
-
+    print("a \n", tablero)
     # Initial screen setup
     screen.fill(WHITE)
     pygame.display.flip()
