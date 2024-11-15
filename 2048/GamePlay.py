@@ -2,12 +2,13 @@ import numpy as np
 # import keyboard as input  # para escuchar inputs
 import Logic2048 as GameLogic
 from Logic2048 import LlenarCasilleroVacio, MoverHaciaIzquierdaTodo
+import gui
 
 
 # https://stackoverflow.com/questions/24072790/how-to-detect-key-presses
 # https://pypi.org/project/keyboard/
 
-def FinDelJuego(tablero):
+def esta_atascado(tablero):
     if not 0 in tablero: return True
     if 2048 in tablero: return True
     return HayMovimientoPosible(tablero)

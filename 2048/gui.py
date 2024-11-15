@@ -1,6 +1,6 @@
 import pygame
 import sys
-import resolucion
+import Logic2048 as resolucion
 
 SCREENSIZE = 600
 
