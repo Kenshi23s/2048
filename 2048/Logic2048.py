@@ -73,7 +73,7 @@ def RotarTableroHorizontalmenteNoventaGrados(Tablero):
 
     return TableroNuevo
 
-def RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, Rotaciones):
+def RotarTablero90Grados(Tablero, Rotaciones):
     if Rotaciones == 1: return RotarTableroHorizontalmenteNoventaGrados(Tablero)
     
     TableroNuevo = np.zeros((4,4), int)
@@ -91,20 +91,22 @@ def mover(Tablero, Movimiento):
         MoverHaciaIzquierdaTodo(Tablero)
     
     elif Movimiento == "derecha":
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 2)
+        Tablero = RotarTablero90Grados(Tablero, 2)
         MoverHaciaIzquierdaTodo(Tablero)
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 2)
+        Tablero = RotarTablero90Grados(Tablero, 2)
     
     elif Movimiento == "arriba":
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 3)
+        Tablero = RotarTablero90Grados(Tablero, 3)
         MoverHaciaIzquierdaTodo(Tablero)
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 1)
+        Tablero = RotarTablero90Grados(Tablero, 1)
     
     elif Movimiento == "abajo":
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 1)
+        Tablero = RotarTablero90Grados(Tablero, 1)
         MoverHaciaIzquierdaTodo(Tablero)
-        Tablero = RotarTableroHorizontalmenteNoventaGradosVariasVeces(Tablero, 3)
+        Tablero = RotarTablero90Grados(Tablero, 3)
 
     LlenarCasilleroVacio(Tablero)
     return Tablero
 #####
+
+
