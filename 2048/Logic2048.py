@@ -108,14 +108,3 @@ def mover(Tablero, Movimiento):
     LlenarCasilleroVacio(Tablero)
     return Tablero
 #####
-
-
-Tablero = crear_tablero(4)
-llenar_pos_vacias(Tablero, 2)
-print(Tablero, '\n')
-Tablero = mover(Tablero, "arriba")
-print(Tablero, '\n')
-Tablero = mover(Tablero, "derecha")
-print(Tablero, '\n')
-Tablero = mover(Tablero, "izquierda")
-print(Tablero, '\n')
