@@ -37,7 +37,6 @@ def LlenarCasilleroVacio(Tablero):  # Busca todos los casilleros vacios, y elige
 ##
 def crear_tablero(n):  # Crea una matriz de 4x4 con ints y llena dos posiciones azarosas diferentes con el valor 2
     Tablero = np.zeros((n, n), int)
-    
     return Tablero
 
 
@@ -82,11 +81,12 @@ def RotarTableroHorizontalmenteNoventaGrados(Tablero):
 
     return TableroNuevo
 
-
+#como se podria hacer al reves a partir de un parametro?
 def RotarTablero90Grados(Tablero, Rotaciones):
     if Rotaciones == 1: return RotarTableroHorizontalmenteNoventaGrados(Tablero)
 
-    TableroNuevo = np.zeros((4, 4), int)
+#esto se estaba sobrescribiendo con lo de abajo
+    # TableroNuevo = np.zeros((4, 4), int)
     TableroNuevo = RotarTableroHorizontalmenteNoventaGrados(Tablero)
 
     for _ in range(Rotaciones - 1):

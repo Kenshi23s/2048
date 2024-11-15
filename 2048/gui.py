@@ -76,7 +76,7 @@ def main(n):
     screen = pygame.display.set_mode((SCREENSIZE, SCREENSIZE))
 
     tablero = resolucion.crear_tablero(3)
-    tablero = resolucion.llenar_pos_vacias(tablero, 10)
+    tablero = resolucion.llenar_pos_vacias(tablero, 1)
     tile_width = (SCREENSIZE - (n+1)*GAP)/n
     tile_size = (tile_width, tile_width)
     print("a \n", tablero)
