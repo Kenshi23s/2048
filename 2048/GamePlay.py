@@ -8,8 +8,9 @@ import pandas as pd
 # https://stackoverflow.com/questions/24072790/how-to-detect-key-presses
 # https://pypi.org/project/keyboard/
 def probarestrategias(n):
-    #generar n estrategias 
-    return 
+    # generar n estrategias 
+    return
+
 
 def ProbarEstrategia(listaDeComandos):  # lista de strings con comandos a usar en bucle
 
@@ -17,17 +18,18 @@ def ProbarEstrategia(listaDeComandos):  # lista de strings con comandos a usar e
     tablero = GameLogic.crear_tablero(3)
     tablero = GameLogic.llenar_pos_vacias(tablero, 1)
     i = 1000  # lo uso como watchdog
-    historial = []
+    # historial = []
     largo = len(listaDeComandos)
 
     while not GameLogic.esta_atascado(tablero) and i >= 0:
         comandoActual = listaDeComandos[i % largo]
         tablero = GameLogic.mover(tablero, comandoActual)
         i -= 1
-        historial.append(copy.deepcopy(tablero))
+        # historial.append(copy.deepcopy(tablero))
+    df = pd.DataFrame()
+    df["Cantidad de turnos"]
 
-
-#llenar un data frame en vez de esto
+    # llenar un data frame en vez de esto
     print("La sumatoria de la estrategia da un total de", sum(tablero))
     print("El juego termino en ", i, "jugadas")
     print("El juego termino en ", i, "jugadas")
