@@ -13,7 +13,7 @@ def probarestrategias(n):
 
 
 def ProbarEstrategia(listaDeComandos):  # lista de strings con comandos a usar en bucle
-
+    df = pd.DataFrame()
     listaDeComandos = NormalizarMovimientos(listaDeComandos)
     tablero = GameLogic.crear_tablero(3)
     tablero = GameLogic.llenar_pos_vacias(tablero, 1)
@@ -23,17 +23,18 @@ def ProbarEstrategia(listaDeComandos):  # lista de strings con comandos a usar e
 
     while not GameLogic.esta_atascado(tablero) and i >= 0:
         comandoActual = listaDeComandos[i % largo]
-        tablero = GameLogic.mover(tablero, comandoActual)
+        if not GameLogic.mover(tablero, comandoActual):
+            i = 0
         i -= 1
         # historial.append(copy.deepcopy(tablero))
-    df = pd.DataFrame()
-    df["Cantidad de turnos"]
 
-    # llenar un data frame en vez de esto
-    print("La sumatoria de la estrategia da un total de", sum(tablero))
-    print("El juego termino en ", i, "jugadas")
-    print("El juego termino en ", i, "jugadas")
-    return historial
+    df["Estrategia"] = listaDeComandos
+    df["Cantidad de turnos"] = i
+    df["SumatoriaTotal"] = sum(tablero)
+    df["NumeroMasAlto"] = np.max(tablero)
+    df["TableroFinal"] = tablero
+
+    return df
 
 
 def NormalizarMovimientos(listaDeComandos):

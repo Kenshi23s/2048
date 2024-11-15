@@ -81,11 +81,12 @@ def RotarTableroHorizontalmenteNoventaGrados(Tablero):
 
     return TableroNuevo
 
-#como se podria hacer al reves a partir de un parametro?
+
+# como se podria hacer al reves a partir de un parametro?
 def RotarTablero90Grados(Tablero, Rotaciones):
     if Rotaciones == 1: return RotarTableroHorizontalmenteNoventaGrados(Tablero)
 
-#esto se estaba sobrescribiendo con lo de abajo
+    # esto se estaba sobrescribiendo con lo de abajo
     # TableroNuevo = np.zeros((4, 4), int)
     TableroNuevo = RotarTableroHorizontalmenteNoventaGrados(Tablero)
 
@@ -100,6 +101,7 @@ def RotarTablero90Grados(Tablero, Rotaciones):
 #####
 def mover(Tablero, Movimiento):
     TableroModificado = dc(Tablero)
+    print(TableroModificado,"sin modificar")
     if Movimiento == "izquierda":
         MoverHaciaIzquierdaTodo(TableroModificado)
 
@@ -117,18 +119,19 @@ def mover(Tablero, Movimiento):
         TableroModificado = RotarTablero90Grados(TableroModificado, 1)
         MoverHaciaIzquierdaTodo(TableroModificado)
         TableroModificado = RotarTablero90Grados(TableroModificado, 3)
-
-   
+        
+    print(TableroModificado, "modificado")
     if not (TableroModificado == Tablero).all():
-        TableroModificado = LlenarCasilleroVacio(TableroModificado)
-        return TableroModificado
-    
-   
-    return Tablero 
+        Tablero = TableroModificado
+        Tablero = LlenarCasilleroVacio(Tablero)
+        return True
+
+    return False
+
+
 #####
 
 def esta_atascado(tablero):
-    
     atascado = 2048 in tablero
     atascado = atascado or not HayMovimientoPosible(tablero)
     return atascado
@@ -143,10 +146,8 @@ def HayMovimientoPosible(matriz):
         j = 0
         while j < matriz.shape[1] and not movimientoposible:
             vecinos = ObtenerVecinos(matriz, (i, j))
-            print(vecinos,matriz) 
             for vecino in vecinos:
                 if matriz[vecino[0]][vecino[1]] == matriz[(i, j)] or matriz[vecino[0]][vecino[1]] == 0:
-                    
                     movimientoposible = True
             j += 1
 
