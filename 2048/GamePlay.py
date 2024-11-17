@@ -9,6 +9,25 @@ movimientos = ["arriba", "derecha", "izquierda", "abajo"]
 
 
 # https://es.stackoverflow.com/questions/403245/c%C3%B3mo-unir-dataframes-en-pandas
+
+#esto es muy "bongo sorting" quisiera ver como hacerlo en simultaneo en varios hilos
+#no esperaba q esto funcione, fue mas un experimento de hacerlo por la fuerza bruta
+# numero de bucles en 3 horas:6341031
+def JugarHastaGanar():
+    tablero = GameLogic.crear_tablero(3)
+    tablero = GameLogic.llenar_pos_vacias(tablero, 1)
+    i = 0
+    estrategia = GenerarEstrategia(len(tablero))
+    while not 2048 in tablero:
+        estrategia = GenerarEstrategia(len(tablero))
+        EjecutarEstrategia(estrategia)
+        i += 1
+        print(i)
+
+    print(tablero, "Se tardaron ", i, "intentos en llegar a este resultado")
+    print(estrategia)
+
+
 def ProbarEstrategias(n):
     # generar n estrategias 
 
@@ -20,6 +39,7 @@ def ProbarEstrategias(n):
     # me gusta esto de _ cuando no usas el parametro, es como el descarte de c#
 
     return masterFrame
+
 
 def ProbarEstrategia():
     estrategiaActual = GenerarEstrategia(rand.randint(1, 10))

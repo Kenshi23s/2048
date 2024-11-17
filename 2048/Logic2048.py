@@ -101,7 +101,7 @@ def RotarTablero90Grados(Tablero, Rotaciones):
 #####
 def mover(Tablero, Movimiento):
     TableroModificado = dc(Tablero)
-    print(TableroModificado, "sin modificar")
+ 
     if Movimiento == "izquierda":
         MoverHaciaIzquierdaTodo(TableroModificado)
 
@@ -120,11 +120,10 @@ def mover(Tablero, Movimiento):
         MoverHaciaIzquierdaTodo(TableroModificado)
         TableroModificado = RotarTablero90Grados(TableroModificado, 3)
 
-    print(TableroModificado, "modificado")
     if not (TableroModificado == Tablero).all():
         Tablero[:, :] = LlenarCasilleroVacio(TableroModificado)[:, :]
         # diferenciacion de C# :
-        # si yo igual el tablero q tengo de referencia a algo, ya no lo modifico 
+        # si yo igualo el tablero q tengo de referencia a algo, ya no lo modifico 
         # por referencia sino que se vuelve una instancia independiente
         # q loco no?
         return True
