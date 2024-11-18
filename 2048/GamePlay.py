@@ -26,7 +26,7 @@ def GoapSimulacion():
 
     i = 0
     finJuego = False
-    while not finJuego and not GameLogic.esta_atascado(tablero) and i < 1000   # es un watch dog
+    while not finJuego and not GameLogic.esta_atascado(tablero) and i < 1000:  # es un watch dog
 
         tablerosSimulados = ObtenerTablerosPosibles(tablero)
         tablero = MejorTablero(tablerosSimulados)
