@@ -1,5 +1,8 @@
+import copy
 import copy as cp
 import numpy as np
+
+import Logic2048
 import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
@@ -23,25 +26,47 @@ stencil = np.array([
 def GoapSimulacion():
     tablero = GameLogic.crear_tablero(4)
     tablero = GameLogic.llenar_pos_vacias(tablero, 2)
+    while 2048 not in tablero:
+        tablero = GameLogic.crear_tablero(4)
+        tablero = GameLogic.llenar_pos_vacias(tablero, 2)
+        i = 0
+        while 2048 not in tablero and not GameLogic.esta_atascado(
+                tablero) and i < 1000:  # es un watch dog
 
-    i = 0
-    finJuego = False
-    while not finJuego and not GameLogic.esta_atascado(tablero) and i < 1000:  # es un watch dog
-
-        tablerosSimulados = ObtenerTablerosPosibles(tablero)
-        tablero = MejorTablero(tablerosSimulados)
-        tablero = GameLogic.llenar_pos_vacias(tablero, 1)
-        print(tablero)
+            tablerosSimulados = ObtenerTablerosPosibles(tablero)
+            tablero = MejorTablero(tablerosSimulados)
+            tablero = GameLogic.llenar_pos_vacias(tablero, 1)
+            print(tablero)
 
 
 def MejorTablero(tableros):
     tablerosDic = {}
     for tablero in tableros:
-        key = np.sum(tablero * stencil)
-        tablerosDic = {key: tablero}
+        print("tablero a evaluar", tablero)
+        if TendraMovimiento(tablero):
+            key = np.sum(tablero)
+            tablerosDic = {key: tablero}
 
-    maximaKey = max(tablerosDic.keys())
+    col = tablerosDic.keys()
+    maximaKey = max(col)
     return tablerosDic[maximaKey]
+
+
+def TendraMovimiento(tablero):
+    return len(ObtenerTablerosPosibles(tablero)) > 0 or TendraMovimientoSiRellenoCon0(tablero)
+
+
+def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
+    posicionesVacias = Logic2048.listar_pos_vacias(tablero)
+    i = len(posicionesVacias) - 1
+    movimientoPosible = False
+    while not movimientoPosible and i >= 0:
+        tableroCopia = copy.deepcopy(tablero)
+        # print(posicionesVacias, len(posicionesVacias))
+        tableroCopia[posicionesVacias[i]] = 2
+        movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
+        print(movimientoPosible)
+        i -= 1
 
 
 def ObtenerTablerosPosibles(tablero):
