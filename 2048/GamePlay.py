@@ -62,7 +62,6 @@ def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
     movimientoPosible = False
     while not movimientoPosible and i >= 0:
         tableroCopia = copy.deepcopy(tablero)
-        # print(posicionesVacias, len(posicionesVacias))
         tableroCopia[posicionesVacias[i]] = 2
         movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
         print(movimientoPosible)
