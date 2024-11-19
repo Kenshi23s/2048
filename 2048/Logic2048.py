@@ -101,7 +101,7 @@ def RotarTablero90Grados(Tablero, Rotaciones):
 #####
 def mover(Tablero, Movimiento):
     TableroModificado = dc(Tablero)
- 
+
     if Movimiento == "izquierda":
         MoverHaciaIzquierdaTodo(TableroModificado)
 

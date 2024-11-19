@@ -9,13 +9,6 @@ import random as rand
 
 movimientos = ["arriba", "derecha", "izquierda", "abajo"]
 
-stencil = np.array([
-    [4, 2, 2, 4],
-    [3, 1, 1, 3],
-    [3, 1, 1, 3],
-    [4, 2, 2, 4]
-])
-
 
 # https://es.stackoverflow.com/questions/403245/c%C3%B3mo-unir-dataframes-en-pandas
 
@@ -26,34 +19,52 @@ stencil = np.array([
 def GoapSimulacion():
     tablero = GameLogic.crear_tablero(4)
     tablero = GameLogic.llenar_pos_vacias(tablero, 2)
-    while 2048 not in tablero:
+    finDeJuego = False
+    while not finDeJuego:
         tablero = GameLogic.crear_tablero(4)
         tablero = GameLogic.llenar_pos_vacias(tablero, 2)
         i = 0
-        while 2048 not in tablero and not GameLogic.esta_atascado(
+        while not finDeJuego and not GameLogic.esta_atascado(
                 tablero) and i < 1000:  # es un watch dog
 
             tablerosSimulados = ObtenerTablerosPosibles(tablero)
             tablero = MejorTablero(tablerosSimulados)
             tablero = GameLogic.llenar_pos_vacias(tablero, 1)
-            print(tablero)
 
+            finDeJuego = 2048 in tablero
+            
+        print(tablero)
 
 def MejorTablero(tableros):
     tablerosDic = {}
     for tablero in tableros:
-        print("tablero a evaluar", tablero)
+        # print("tablero a evaluar", tablero)
         if TendraMovimiento(tablero):
             key = np.sum(tablero)
             tablerosDic = {key: tablero}
 
-    col = tablerosDic.keys()
-    maximaKey = max(col)
-    return tablerosDic[maximaKey]
+  
+    
+    if len(tablerosDic) > 0:
+        col = tablerosDic.keys()#lo puse en un if para testear, pero siempre deberia haber un tablero
+        maximaKey = max(col)
+        return tablerosDic[maximaKey]
+    return tableros[0]
 
 
-def TendraMovimiento(tablero):
-    return len(ObtenerTablerosPosibles(tablero)) > 0 or TendraMovimientoSiRellenoCon0(tablero)
+# ---------- Preguntas---------
+def TendraMovimiento(tablero):  # nose si la ultima condicion esta de mas, pero queria ver el otro posible outcome
+    tablerosCopia = ObtenerTablerosPosibles(tablero)
+
+    MovimientoPosible = len(tablerosCopia) > 0 or TendraMovimientoSiRellenoCon0(tablero)
+    if not MovimientoPosible:
+        i = len(tablerosCopia) - 1
+        while i >= 0 and not MovimientoPosible:
+            MovimientoPosible = len(
+                ObtenerTablerosPosibles(tablerosCopia[i]) > 0 or TendraMovimientoSiRellenoCon0(tablerosCopia[i]))
+            i -= 1
+
+    return MovimientoPosible
 
 
 def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
@@ -67,6 +78,26 @@ def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
         print(movimientoPosible)
         i -= 1
 
+    posicionesVacias = Logic2048.listar_pos_vacias(tablero)
+    i = len(posicionesVacias) - 1
+    movimientoPosible = False
+    while not movimientoPosible and i >= 0:
+        tableroCopia = copy.deepcopy(tablero)
+        tableroCopia[posicionesVacias[i]] = 2
+        movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
+        print(movimientoPosible)
+        i -= 1
+
+
+def TendranMovimientosSiRellenoCon0(tableros):  # buscar otro nombre
+
+    i = len(tableros) - 1
+    movimientoPosible = False
+    while i >= 0 and not movimientoPosible:
+        movimientoPosible = TendraMovimientoSiRellenoCon0(tableros[i])
+        i -= 1
+    return movimientoPosible
+
 
 def ObtenerTablerosPosibles(tablero):
     tableros = []
@@ -77,7 +108,8 @@ def ObtenerTablerosPosibles(tablero):
     return tableros
 
 
-# --------------GOAP-----------
+# -----------------
+
 def JugarHastaGanar():
     tablero = GameLogic.crear_tablero(3)
     tablero = GameLogic.llenar_pos_vacias(tablero, 1)
@@ -93,6 +125,7 @@ def JugarHastaGanar():
     print(estrategia)
 
 
+# ------------Estrategias----------
 def ProbarEstrategias(n):
     # generar n estrategias 
 
@@ -146,6 +179,9 @@ def EjecutarEstrategia(listaDeComandos):  # lista de strings con comandos a usar
     return df
 
 
+# ----------------------
+
+# --------NormalizarTexto-------
 def PasarAString(comandos):
     palabra = ""
     for x in comandos:
@@ -157,3 +193,8 @@ def NormalizarMovimientos(listaDeComandos):
     for i in range(len(listaDeComandos)):
         listaDeComandos[i] = listaDeComandos[i].lower()
     return listaDeComandos
+
+
+# -----------------------------------
+
+GoapSimulacion()
