@@ -105,6 +105,7 @@ def main(n):
                 elif event.key == pygame.K_DOWN:
                     resolucion.mover(tablero, "abajo")
                 elif event.key == pygame.K_RETURN and resolucion.esta_atascado(tablero):
+                    print("tablero atascado con",tablero)
                     tablero = resolucion.crear_tablero(n)
                     tablero = resolucion.llenar_pos_vacias(tablero, 2)
 
