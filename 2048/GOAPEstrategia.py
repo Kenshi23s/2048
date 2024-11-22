@@ -2,6 +2,7 @@ import copy
 import copy as cp
 import numpy as np
 
+import Logic2048
 import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
@@ -31,9 +32,8 @@ def GoapSimulacion():
             tablero = GameLogic.llenar_pos_vacias(tablero, 1)
 
             finDeJuego = 2048 in tablero
-
+            
         print(tablero)
-
 
 def MejorTablero(tableros):
     tablerosDic = {}
@@ -43,8 +43,10 @@ def MejorTablero(tableros):
             key = np.sum(tablero)
             tablerosDic = {key: tablero}
 
+  
+    
     if len(tablerosDic) > 0:
-        col = tablerosDic.keys()  # lo puse en un if para testear, pero siempre deberia haber un tablero
+        col = tablerosDic.keys()#lo puse en un if para testear, pero siempre deberia haber un tablero
         maximaKey = max(col)
         return tablerosDic[maximaKey]
     return tableros[0]
@@ -58,32 +60,33 @@ def TendraMovimiento(tablero):  # nose si la ultima condicion esta de mas, pero 
     if not MovimientoPosible:
         i = len(tablerosCopia) - 1
         while i >= 0 and not MovimientoPosible:
-            MovimientoPosible = len(ObtenerTablerosPosibles(tablerosCopia[i]) > 0
+            MovimientoPosible = len(
+                ObtenerTablerosPosibles(tablerosCopia[i]) > 0 or TendraMovimientoSiRellenoCon0(tablerosCopia[i]))
             i -= 1
 
     return MovimientoPosible
 
 
-# def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
-#     posicionesVacias = Logic2048.listar_pos_vacias(tablero)
-#     i = len(posicionesVacias) - 1
-#     movimientoPosible = False
-#     while not movimientoPosible and i >= 0:
-#         tableroCopia = copy.deepcopy(tablero)
-#         tableroCopia[posicionesVacias[i]] = 2
-#         movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
-#         print(movimientoPosible)
-#         i -= 1
-# 
-#     posicionesVacias = Logic2048.listar_pos_vacias(tablero)
-#     i = len(posicionesVacias) - 1
-#     movimientoPosible = False
-#     while not movimientoPosible and i >= 0:
-#         tableroCopia = copy.deepcopy(tablero)
-#         tableroCopia[posicionesVacias[i]] = 2
-#         movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
-#         print(movimientoPosible)
-#         i -= 1
+def TendraMovimientoSiRellenoCon0(tablero):  # buscar otro nombre
+    posicionesVacias = Logic2048.listar_pos_vacias(tablero)
+    i = len(posicionesVacias) - 1
+    movimientoPosible = False
+    while not movimientoPosible and i >= 0:
+        tableroCopia = copy.deepcopy(tablero)
+        tableroCopia[posicionesVacias[i]] = 2
+        movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
+        print(movimientoPosible)
+        i -= 1
+
+    posicionesVacias = Logic2048.listar_pos_vacias(tablero)
+    i = len(posicionesVacias) - 1
+    movimientoPosible = False
+    while not movimientoPosible and i >= 0:
+        tableroCopia = copy.deepcopy(tablero)
+        tableroCopia[posicionesVacias[i]] = 2
+        movimientoPosible = len(ObtenerTablerosPosibles(tableroCopia)) > 0
+        print(movimientoPosible)
+        i -= 1
 
 
 def TendranMovimientosSiRellenoCon0(tableros):  # buscar otro nombre
@@ -193,3 +196,5 @@ def NormalizarMovimientos(listaDeComandos):
 
 
 # -----------------------------------
+
+GoapSimulacion()
