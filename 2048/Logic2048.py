@@ -2,7 +2,6 @@ import numpy as np
 from copy import deepcopy as dc
 from random import randint as rd
 
-
 def listar_pos_vacias(tablero):
     CasillasVacias = []
     for i in range(tablero.shape[0]):
@@ -13,7 +12,7 @@ def listar_pos_vacias(tablero):
     return CasillasVacias
 
 
-#
+
 def llenar_pos_vacias(tablero, cantidad):
     CasillasVacias = listar_pos_vacias(tablero)
     if cantidad > len(CasillasVacias): cantidad = len(CasillasVacias)
@@ -32,10 +31,7 @@ def LlenarCasilleroVacio(Tablero):  # Busca todos los casilleros vacios, y elige
     return Tablero
 
 
-#
-
-##
-def crear_tablero(n):  # Crea una matriz de 4x4 con ints y llena dos posiciones azarosas diferentes con el valor 2
+def crear_tablero(n): 
     Tablero = np.zeros((n, n), int)
     return Tablero
 
@@ -96,9 +92,6 @@ def RotarTablero90Grados(Tablero, Rotaciones):
     return TableroNuevo
 
 
-####
-
-#####
 def mover(Tablero, Movimiento):
     TableroModificado = dc(Tablero)
 
