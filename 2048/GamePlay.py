@@ -76,7 +76,7 @@ def GenerarEstrategia(largo):
 
 
 # la funcion que se pasa por aca recibe un tablero y debe devolver un string con el comando
-def EjecutarEstrategia(funcionObtenerMovimiento):
+def EjecutarEstrategia(obtenerMovimiento):
     df = pd.DataFrame()
 
     tablero = GameLogic.crear_tablero(4)
@@ -85,18 +85,15 @@ def EjecutarEstrategia(funcionObtenerMovimiento):
     i = 0
     finJuego = False
     while not finJuego and not GameLogic.esta_atascado(tablero) and i < 1000:  # es un watch dog
-        comandoActual = funcionObtenerMovimiento(cp.deepcopy(tablero))
+        comandoActual = obtenerMovimiento(cp.deepcopy(tablero))
         if not GameLogic.mover(tablero, comandoActual):
             finJuego = True
         i += 1
         tablero = GameLogic.llenar_pos_vacias(tablero, 1)
-        # historial.append(copy.deepcopy(tablero))
-    # Relleno Data frame
-    # df["Estrategia"] = [PasarAString(comandoActual)]
+    
     df["Cantidad de turnos"] = [i]
     df["SumatoriaTotal"] = [sum(tablero)]
     df["NumeroMasAlto"] = [np.max(tablero)]
-    # df["TableroFinal"] = tablero.tolist()
     print(tablero)
     return df
 

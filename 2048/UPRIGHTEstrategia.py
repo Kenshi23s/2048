@@ -1,12 +1,6 @@
-import copy
-import copy as cp
-import numpy as np
 
 import Logic2048
-import Logic2048 as GameLogic
-import pandas as pd
 import random as rand
-
 
 # https://es.stackoverflow.com/questions/403245/c%C3%B3mo-unir-dataframes-en-pandas
 
@@ -24,6 +18,10 @@ def ObtenerMovimientoEsquinaIzquierda(tablero):
     ComandosASeguir = ["izquierda", "abajo", "arriba", "derecha"]
     return ProbarComando(tablero,ComandosASeguir)
 
+def EjecutarMovimientoAleatorio(tablero):
+    ComandosASeguir = ["izquierda", "abajo", "arriba", "derecha"]
+    rand.shuffle(ComandosASeguir)
+    return ProbarComando(tablero, ComandosASeguir)
 
 def ProbarComando(tablero, comando):
     MovimientoPosible = False
