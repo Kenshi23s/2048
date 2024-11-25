@@ -115,12 +115,11 @@ def mover(Tablero, Movimiento):
 
     if not (TableroModificado == Tablero).all():
         Tablero[:, :] = LlenarCasilleroVacio(TableroModificado)[:, :]
-        # diferenciacion de C# :
-        # si yo igualo el tablero q tengo de referencia a algo, ya no lo modifico 
-        # por referencia sino que se vuelve una instancia independiente
-        # q loco no?
         return True
-
+    # diferenciacion de C# :
+    # si yo igualo el tablero q tengo de referencia a algo, ya no lo modifico 
+    # por referencia sino que se vuelve una instancia independiente
+    # q loco no?
     return False
 
 

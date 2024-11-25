@@ -20,30 +20,23 @@ def MejorTablero(tableros, dimTablero):
         if TendraMovimiento(tablero):
             tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), 5, 2) / 5 * 2
             tablerosPosibles += np.max(tablero) / 2048
-            tablerosPosibles += np.sum(tablero) / 2048
+            # tablerosPosibles += np.sum(tablero) / 2048
             # print("el tablero", tablero, "tiene", tablerosPosibles, "movimientosPosibles")
             if tablerosPosibles > mejorTableroActualmente[0]:
                 mejorTableroActualmente = (tablerosPosibles, tablero)
-
     return mejorTableroActualmente[1]
 
 
+# https://www.geeksforgeeks.org/python-random-sample-function/
 def AgarrarRandom(lista, n):
     if n > len(lista):
         n = len(lista)
     return random.sample(lista, n)
 
 
-def TendraMovimiento(tablero):  # nose si la ultima condicion esta de mas, pero queria ver el otro posible outcome
+def TendraMovimiento(tablero):
     tablerosCopia = ObtenerTablerosPosibles(tablero)
-
     MovimientoPosible = len(tablerosCopia) > 0
-    if not MovimientoPosible:
-        i = len(tablerosCopia) - 1
-        for copia in tablerosCopia:
-            MovimientoPosible = MovimientoPosible or len(ObtenerTablerosPosibles(copia)) > 0
-        i -= 1
-
     return MovimientoPosible
 
 
@@ -55,11 +48,11 @@ def CantidadMovimientosFuturos(tablero, n, ramificado):
     for i in range(len(posicionesVacias) - 1):
         tableroCopia = cp.deepcopy(tablero)
         tableroCopia[posicionesVacias[i]] = 2
-        if len(ObtenerTablerosPosibles(tableroCopia)) > 0:  # aca ya no estoy chequeando adentro de los mismos arboles, 
+        posibles = len(ObtenerTablerosPosibles(tableroCopia))
+        if posibles > 0:  # aca ya no estoy chequeando adentro de los mismos arboles, 
             # quizas necesito otro parametro para chequear mas adentro del arbol y voy haciendo recursion con fibonacci?
             exitos += 1
             exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1)
-        i += 1
     return exitos
 
 
@@ -69,5 +62,7 @@ def ObtenerTablerosPosibles(tablero):
         tableroSimulado = cp.deepcopy(tablero)
         if Logic2048.mover(tableroSimulado, movimiento):
             tableros[movimiento] = tableroSimulado
+        else:
+            print("descarto tablero", tableroSimulado, movimiento)
 
     return tableros

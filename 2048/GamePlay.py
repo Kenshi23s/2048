@@ -98,7 +98,7 @@ def EjecutarEstrategia(obtenerMovimiento):
     df["Cantidad de turnos"] = [i]
     # df["SumatoriaTotal"] = [sum(tablero)]
     df["NumeroMasAlto"] = [np.max(tablero)]
-    print(tablero)
+    # print(tablero)
     return df
 
 
@@ -139,4 +139,3 @@ def GraficarEstrategia(estrategia, k):
     plt.show()
 
 
-GraficarEstrategia(Goap.GoapSimulacion, 50)
