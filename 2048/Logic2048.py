@@ -2,6 +2,7 @@ import numpy as np
 from copy import deepcopy as dc
 from random import randint as rd
 
+
 def listar_pos_vacias(tablero):
     CasillasVacias = []
     for i in range(tablero.shape[0]):
@@ -12,8 +13,8 @@ def listar_pos_vacias(tablero):
     return CasillasVacias
 
 
-
 def llenar_pos_vacias(tablero, cantidad):
+    # print("lleno pos vacia")
     CasillasVacias = listar_pos_vacias(tablero)
     if cantidad > len(CasillasVacias): cantidad = len(CasillasVacias)
 
@@ -27,11 +28,12 @@ def llenar_pos_vacias(tablero, cantidad):
 
 def LlenarCasilleroVacio(Tablero):  # Busca todos los casilleros vacios, y elige uno al azar para poner el numero dos
     CasillasVacias = listar_pos_vacias(Tablero)
-    Tablero[CasillasVacias[rd(0, len(CasillasVacias) - 1)]] = 2
+    if len(CasillasVacias) > 0:
+        Tablero[CasillasVacias[rd(0, len(CasillasVacias) - 1)]] = 2
     return Tablero
 
 
-def crear_tablero(n): 
+def crear_tablero(n):
     Tablero = np.zeros((n, n), int)
     return Tablero
 
@@ -128,12 +130,14 @@ def mover(Tablero, Movimiento):
 def esta_atascado(tablero):
     atascado = 2048 in tablero
     atascado = atascado or not HayMovimientoPosible(tablero)
+
     return atascado
 
 
 def HayMovimientoPosible(matriz):
-    movimientoposible = False
+    if 0 in matriz: return True
 
+    movimientoposible = False
     i = 0
     # si soy un 0 no hace falta seguir
     while not movimientoposible and i < matriz.shape[0]:
@@ -144,8 +148,8 @@ def HayMovimientoPosible(matriz):
                 if matriz[vecino[0]][vecino[1]] == matriz[(i, j)] or matriz[vecino[0]][vecino[1]] == 0:
                     movimientoposible = True
             j += 1
-
         i += 1
+    # if not movimientoposible: print("no hay movimiento posible en", matriz)
     return movimientoposible
 
 

@@ -1,12 +1,10 @@
 import copy as cp
 import numpy as np
 
-import GOAPEstrategia
 import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
 import GOAPEstrategia as Goap
-import UPRIGHTEstrategia
 import UPRIGHTEstrategia as Secuencia
 import matplotlib.pyplot as plt
 import collections
@@ -92,13 +90,15 @@ def EjecutarEstrategia(obtenerMovimiento):
         comandoActual = obtenerMovimiento(cp.deepcopy(tablero))
         if not GameLogic.mover(tablero, comandoActual):
             finJuego = True
-        i += 1
-        tablero = GameLogic.llenar_pos_vacias(tablero, 1)
+        else: 
+            i += 1
+            # tablero = GameLogic.llenar_pos_vacias(tablero, 1)
+       
 
     df["Cantidad de turnos"] = [i]
     # df["SumatoriaTotal"] = [sum(tablero)]
     df["NumeroMasAlto"] = [np.max(tablero)]
-    # print(tablero)
+    print(tablero)
     return df
 
 
@@ -138,4 +138,5 @@ def GraficarEstrategia(estrategia, k):
     plt.bar(contador.keys(), contador.values())
     plt.show()
 
-
+while True:
+    EjecutarEstrategia(Goap.Simulacion)
