@@ -18,7 +18,9 @@ def MejorTablero(tableros, dimTablero):
     mejorTableroActualmente = (-1, np.zeros((dimTablero, dimTablero), dtype=int))
     for tablero in tableros:
         if TendraMovimiento(tablero):
-            tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), 100, 2)
+            tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), 5, 2) / 5 * 2
+            tablerosPosibles += np.max(tablero) / 2048
+            tablerosPosibles += np.sum(tablero) / 2048
             # print("el tablero", tablero, "tiene", tablerosPosibles, "movimientosPosibles")
             if tablerosPosibles > mejorTableroActualmente[0]:
                 mejorTableroActualmente = (tablerosPosibles, tablero)
@@ -38,9 +40,9 @@ def TendraMovimiento(tablero):  # nose si la ultima condicion esta de mas, pero 
     MovimientoPosible = len(tablerosCopia) > 0
     if not MovimientoPosible:
         i = len(tablerosCopia) - 1
-        while i >= 0 and not MovimientoPosible:
-            MovimientoPosible = len(ObtenerTablerosPosibles(tablerosCopia[i]) > 0)
-            i -= 1
+        for copia in tablerosCopia:
+            MovimientoPosible = MovimientoPosible or len(ObtenerTablerosPosibles(copia)) > 0
+        i -= 1
 
     return MovimientoPosible
 
@@ -56,9 +58,9 @@ def CantidadMovimientosFuturos(tablero, n, ramificado):
         if len(ObtenerTablerosPosibles(tableroCopia)) > 0:  # aca ya no estoy chequeando adentro de los mismos arboles, 
             # quizas necesito otro parametro para chequear mas adentro del arbol y voy haciendo recursion con fibonacci?
             exitos += 1
-            exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1) 
+            exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1)
         i += 1
-    return exitos / n
+    return exitos
 
 
 def ObtenerTablerosPosibles(tablero):
@@ -66,6 +68,6 @@ def ObtenerTablerosPosibles(tablero):
     for movimiento in ["izquierda", "derecha", "arriba", "abajo"]:
         tableroSimulado = cp.deepcopy(tablero)
         if Logic2048.mover(tableroSimulado, movimiento):
-            tableros = {movimiento: tableroSimulado}
+            tableros[movimiento] = tableroSimulado
 
     return tableros

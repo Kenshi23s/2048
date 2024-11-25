@@ -1,10 +1,11 @@
 import copy as cp
 import numpy as np
 
+import GOAPEstrategia
 import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
-import GoapEstrategia as Goap
+import GOAPEstrategia as Goap
 import UPRIGHTEstrategia
 import UPRIGHTEstrategia as Secuencia
 import matplotlib.pyplot as plt
@@ -138,4 +139,4 @@ def GraficarEstrategia(estrategia, k):
     plt.show()
 
 
-GraficarEstrategia(UPRIGHTEstrategia.ObtenerMovimientoEsquinaDerecha, 100)
+GraficarEstrategia(Goap.GoapSimulacion, 50)
