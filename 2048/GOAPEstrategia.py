@@ -11,8 +11,6 @@ def GoapSimulacion(tablero):
     for key in tablerosSimulados.keys():
         if (tablerosSimulados[key] == tablero).all():
             return key
-
-    print("devuelvo llave nula")
     return ""
 
 
@@ -21,7 +19,7 @@ def MejorTablero(tableros, dimTablero):
     for tablero in tableros:
         if TendraMovimiento(tablero):
             tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), 100, 2)
-            print("el tablero", tablero, "tiene", tablerosPosibles, "movimientosPosibles")
+            # print("el tablero", tablero, "tiene", tablerosPosibles, "movimientosPosibles")
             if tablerosPosibles > mejorTableroActualmente[0]:
                 mejorTableroActualmente = (tablerosPosibles, tablero)
 
@@ -58,9 +56,9 @@ def CantidadMovimientosFuturos(tablero, n, ramificado):
         if len(ObtenerTablerosPosibles(tableroCopia)) > 0:  # aca ya no estoy chequeando adentro de los mismos arboles, 
             # quizas necesito otro parametro para chequear mas adentro del arbol y voy haciendo recursion con fibonacci?
             exitos += 1
-            exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1)
+            exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1) 
         i += 1
-    return exitos
+    return exitos / n
 
 
 def ObtenerTablerosPosibles(tablero):

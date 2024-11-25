@@ -5,7 +5,10 @@ import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
 import GoapEstrategia as Goap
+import UPRIGHTEstrategia
 import UPRIGHTEstrategia as Secuencia
+import matplotlib.pyplot as plt
+import collections
 
 movimientos = ["arriba", "derecha", "izquierda", "abajo"]
 
@@ -90,9 +93,9 @@ def EjecutarEstrategia(obtenerMovimiento):
             finJuego = True
         i += 1
         tablero = GameLogic.llenar_pos_vacias(tablero, 1)
-    
+
     df["Cantidad de turnos"] = [i]
-    df["SumatoriaTotal"] = [sum(tablero)]
+    # df["SumatoriaTotal"] = [sum(tablero)]
     df["NumeroMasAlto"] = [np.max(tablero)]
     print(tablero)
     return df
@@ -116,5 +119,23 @@ def NormalizarMovimientos(listaDeComandos):
     # -----------------------------------
 
 
-while True:
-    EjecutarEstrategia(Secuencia.ObtenerMovimientoEsquinaDerecha)
+# https://micro.recursospython.com/recursos/como-obtener-el-nombre-de-una-funcion.html
+# https://www.hackerrank.com/challenges/collections-counter/problem
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html
+# cosas que encontre que me parecieron interesantes 
+def GraficarEstrategia(estrategia, k):
+    valoresMasAltos = []
+    # potencias2 = np.array([2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048])
+    for _ in range(k):
+        resultado = EjecutarEstrategia(estrategia)
+        valoresMasAltos.append(resultado["NumeroMasAlto"].iloc[0])
+        # print(resultado["NumeroMasAlto"])
+
+    contador = dict(collections.Counter(valoresMasAltos))
+    titulo = estrategia.__name__ + "Simulaciones:" + str(k)
+    plt.title(titulo)  # devuelve el nombre de la estrategia
+    plt.bar(contador.keys(), contador.values())
+    plt.show()
+
+
+GraficarEstrategia(UPRIGHTEstrategia.ObtenerMovimientoEsquinaDerecha, 100)
