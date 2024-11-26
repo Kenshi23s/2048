@@ -90,10 +90,9 @@ def EjecutarEstrategia(obtenerMovimiento):
         comandoActual = obtenerMovimiento(cp.deepcopy(tablero))
         if not GameLogic.mover(tablero, comandoActual):
             finJuego = True
-        else: 
+        else:
             i += 1
-            # tablero = GameLogic.llenar_pos_vacias(tablero, 1)
-       
+            tablero = GameLogic.LlenarCasilleroVacio(tablero)
 
     df["Cantidad de turnos"] = [i]
     # df["SumatoriaTotal"] = [sum(tablero)]
@@ -137,6 +136,7 @@ def GraficarEstrategia(estrategia, k):
     plt.title(titulo)  # devuelve el nombre de la estrategia
     plt.bar(contador.keys(), contador.values())
     plt.show()
+
 
 while True:
     EjecutarEstrategia(Goap.Simulacion)

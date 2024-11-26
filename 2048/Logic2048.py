@@ -116,7 +116,7 @@ def mover(Tablero, Movimiento):
         TableroModificado = RotarTablero90Grados(TableroModificado, 3)
 
     if not (TableroModificado == Tablero).all():
-        Tablero[:, :] = LlenarCasilleroVacio(TableroModificado)[:, :]
+        Tablero[:, :] = TableroModificado[:, :]
         return True
     # diferenciacion de C# :
     # si yo igualo el tablero q tengo de referencia a algo, ya no lo modifico 

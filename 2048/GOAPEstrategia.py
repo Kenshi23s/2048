@@ -3,6 +3,8 @@ import random
 import Logic2048
 import copy as cp
 
+from Logic2048 import LlenarCasilleroVacio, HayMovimientoPosible
+
 
 def Simulacion(tablero):
     tablerosSimulados = ObtenerTablerosPosibles(tablero)  # devuelve dic de {movimiento, tablero}
@@ -20,10 +22,12 @@ def Simulacion(tablero):
 
 
 def MejorTablero(tableros, dimTablero):
+    n = 3
+    ramificado = 1
     mejorTableroActualmente = (-1, np.zeros((dimTablero, dimTablero), dtype=int))
     for tablero in tableros:
         if TendraMovimiento(tablero):
-            tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), 5, 1) / 5 * 1
+            tablerosPosibles = CantidadMovimientosFuturos(cp.deepcopy(tablero), n, ramificado) / n * ramificado
             tablerosPosibles += np.max(tablero) / 2048
             # tablerosPosibles += np.sum(tablero) / 2048
             # print("el tablero", tablero, "tiene", tablerosPosibles, "movimientosPosibles")
@@ -51,7 +55,7 @@ def CantidadMovimientosFuturos(tablero, n, ramificado):
 
     posicionesVacias = AgarrarRandom(Logic2048.listar_pos_vacias(tablero), n)
     if len(posicionesVacias) <= 0: return exitos
-    
+
     for i in range(len(posicionesVacias) - 1):
         tableroCopia = cp.deepcopy(tablero)
         tableroCopia[posicionesVacias[i]] = 2
@@ -67,7 +71,7 @@ def ObtenerTablerosPosibles(tablero):
     tableros = {}
     for movimiento in ["izquierda", "derecha", "arriba", "abajo"]:
         tableroSimulado = cp.deepcopy(tablero)
-        if Logic2048.mover(tableroSimulado, movimiento):
+        if Logic2048.mover(tableroSimulado, movimiento) and HayMovimientoPosible(tableroSimulado):
             tableros[movimiento] = tableroSimulado
         # else:
         #     print("descarto tablero", tableroSimulado, movimiento)

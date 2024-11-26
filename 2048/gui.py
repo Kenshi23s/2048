@@ -1,6 +1,7 @@
 import pygame
 import sys
 import Logic2048 as resolucion
+from Logic2048 import LlenarCasilleroVacio
 
 SCREENSIZE = 600
 
@@ -97,15 +98,19 @@ def main(n):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     resolucion.mover(tablero, "derecha")
+                    tablero = LlenarCasilleroVacio(tablero)
                 elif event.key == pygame.K_LEFT:
                     resolucion.mover(tablero, "izquierda")
+                    tablero = LlenarCasilleroVacio(tablero)
                 elif event.key == pygame.K_UP:
                     print("inputArriba")
                     resolucion.mover(tablero, "arriba")
+                    tablero = LlenarCasilleroVacio(tablero)
                 elif event.key == pygame.K_DOWN:
                     resolucion.mover(tablero, "abajo")
+                    tablero = LlenarCasilleroVacio(tablero)
                 elif event.key == pygame.K_RETURN and resolucion.esta_atascado(tablero):
-                    print("tablero atascado con",tablero)
+                    print("tablero atascado con", tablero)
                     tablero = resolucion.crear_tablero(n)
                     tablero = resolucion.llenar_pos_vacias(tablero, 2)
 
