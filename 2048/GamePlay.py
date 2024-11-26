@@ -5,6 +5,7 @@ import Logic2048 as GameLogic
 import pandas as pd
 import random as rand
 import GOAPEstrategia as Goap
+import UPRIGHTEstrategia
 import UPRIGHTEstrategia as Secuencia
 import matplotlib.pyplot as plt
 import collections
@@ -78,22 +79,23 @@ def GenerarEstrategia(largo):
 
 
 # la funcion que se pasa por aca recibe un tablero y debe devolver un string con el comando
-def EjecutarEstrategia(obtenerMovimiento):
+def EjecutarEstrategia(obtenerMovimiento, dim):
     df = pd.DataFrame()
 
-    tablero = GameLogic.crear_tablero(4)
+    tablero = GameLogic.crear_tablero(dim)
     tablero = GameLogic.llenar_pos_vacias(tablero, 2)
 
     i = 0
     finJuego = False
-    while not finJuego and not GameLogic.esta_atascado(tablero) and i < 1000:  # es un watch dog
+    while not finJuego and not GameLogic.esta_atascado(tablero):  # es un watch dog
         comandoActual = obtenerMovimiento(cp.deepcopy(tablero))
         if not GameLogic.mover(tablero, comandoActual):
             finJuego = True
         else:
-            i += 1
+            i+=1
             tablero = GameLogic.LlenarCasilleroVacio(tablero)
 
+    print(i)
     df["Cantidad de turnos"] = [i]
     # df["SumatoriaTotal"] = [sum(tablero)]
     df["NumeroMasAlto"] = [np.max(tablero)]
@@ -123,20 +125,19 @@ def NormalizarMovimientos(listaDeComandos):
 # https://www.hackerrank.com/challenges/collections-counter/problem
 # https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html
 # cosas que encontre que me parecieron interesantes 
-def GraficarEstrategia(estrategia, k):
+def GraficarEstrategia(estrategia, k, dim):
     valoresMasAltos = []
     # potencias2 = np.array([2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048])
     for _ in range(k):
-        resultado = EjecutarEstrategia(estrategia)
+        resultado = EjecutarEstrategia(estrategia, dim)
         valoresMasAltos.append(resultado["NumeroMasAlto"].iloc[0])
         # print(resultado["NumeroMasAlto"])
 
     contador = dict(collections.Counter(valoresMasAltos))
-    titulo = estrategia.__name__ + "Simulaciones:" + str(k)
+    titulo = estrategia.__name__ + " Simulaciones: " + str(k) + "  Dimensiones: " + str(dim)
     plt.title(titulo)  # devuelve el nombre de la estrategia
-    plt.bar(contador.keys(), contador.values())
+    plt.plot(valoresMasAltos)
     plt.show()
 
 
-while True:
-    EjecutarEstrategia(Goap.Simulacion)
+# GraficarEstrategia(UPRIGHTEstrategia.EjecutarMovimientoAleatorio, 50, 6)

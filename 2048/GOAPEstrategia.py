@@ -6,7 +6,7 @@ import copy as cp
 from Logic2048 import LlenarCasilleroVacio, HayMovimientoPosible
 
 
-def Simulacion(tablero):
+def SimulacionGOAP(tablero):
     tablerosSimulados = ObtenerTablerosPosibles(tablero)  # devuelve dic de {movimiento, tablero}
 
     if len(tablerosSimulados) <= 0:
@@ -64,6 +64,7 @@ def CantidadMovimientosFuturos(tablero, n, ramificado):
             # quizas necesito otro parametro para chequear mas adentro del arbol y voy haciendo recursion con fibonacci?
             exitos += posibles / 4
             exitos += CantidadMovimientosFuturos(tableroCopia, n, ramificado - 1)
+        
     return exitos
 
 

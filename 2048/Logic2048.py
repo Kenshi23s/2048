@@ -42,7 +42,7 @@ def crear_tablero(n):
 
 ###
 def MoverHaciaIzquierdaTodo(Tablero):
-    for i in range(0, Tablero.shape[1]):
+    for i in range(0, Tablero.shape[0]):
         for j in range(Tablero.shape[1]):
             MoverHaciaIzquierda(i, j, Tablero)
 
@@ -135,18 +135,17 @@ def esta_atascado(tablero):
 
 
 def HayMovimientoPosible(matriz):
-    if 0 in matriz: return True
-
     movimientoposible = False
     i = 0
     # si soy un 0 no hace falta seguir
     while not movimientoposible and i < matriz.shape[0]:
         j = 0
         while j < matriz.shape[1] and not movimientoposible:
-            vecinos = ObtenerVecinos(matriz, (i, j))
-            for vecino in vecinos:
-                if matriz[vecino[0]][vecino[1]] == matriz[(i, j)] or matriz[vecino[0]][vecino[1]] == 0:
-                    movimientoposible = True
+            if matriz[i, j] != 0:
+                vecinos = ObtenerVecinos(matriz, (i, j))
+                for vecino in vecinos:
+                    if matriz[vecino[0]][vecino[1]] == matriz[(i, j)] or matriz[vecino[0]][vecino[1]] == 0:
+                        movimientoposible = True
             j += 1
         i += 1
     # if not movimientoposible: print("no hay movimiento posible en", matriz)
